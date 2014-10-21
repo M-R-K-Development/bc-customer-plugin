@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Customers</div>
+
+
+    <table class="table table-condensed">
+        <thead>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Middle Name</th>
+            <th>Last Name</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in response.items">
+                <td>{{item.id}}</td>
+                <td>{{item.firstName}}</td>
+                <td>{{item.middleName}}</td>
+                <td>{{item.lastName}}</td>
+                <td><a href="#" class="btn btn-default">View</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+  <div class="panel-footer">
+      <ul class="pagination">
+          <li class="disabled"><a href="#">&laquo;</a></li>
+          <li class="active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#">&raquo;</a></li>
+      </ul>
+  </div>
+</div>

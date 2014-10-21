@@ -1,0 +1,9 @@
+{
+  "menu-first-mrk-customer-manager": {
+      "weight": 100000,
+      "title": "Customer Manager",
+      "attr": {
+          "href": "/Admin/AppLoader.aspx?client_id=mrk-customer-manager"
+      }
+  }
+}

@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Lead Source Types</div>
+
+    <table class="table table-condensed">
+        <thead>
+            <th>ID</th>
+            <th>Label</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+        	<tr ng-repeat="item in response.items">
+            	<td>{{item.id}}</td>
+                <td>{{item.label}}</td>
+                <td><a href="#" class="btn btn-default">Edit</a></td>
+            </tr>
+        </tbody>
+     </table>
+
+</div>
