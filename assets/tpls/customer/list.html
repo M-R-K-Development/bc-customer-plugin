@@ -21,15 +21,7 @@
         </tbody>
     </table>
 
-  <div class="panel-footer">
-      <ul class="pagination">
-          <li class="disabled"><a href="#">&laquo;</a></li>
-          <li class="active"><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li><a href="#">&raquo;</a></li>
-      </ul>
+  <div class="panel-footer text-center">
+      <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-md" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" max-size='10'></pagination>
   </div>
 </div>
