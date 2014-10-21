@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-heading">Title Types</div>
+    <div class="panel-heading">Title Types</div>
 
     <table class="table table-condensed">
         <thead>
@@ -8,12 +8,39 @@
             <th>Action</th>
         </thead>
         <tbody>
-        	<tr ng-repeat="item in response.items">
-            	<td>{{item.id}}</td>
+            <tr ng-repeat="item in response.items">
+                <td>{{item.id}}</td>
                 <td>{{item.label}}</td>
-                <td><a href="#" class="btn btn-default">Edit</a></td>
+                <td><a href="javascript:void(0)" class="btn btn-default" ng-click='edit($index)'>Edit</a>
+                </td>
             </tr>
         </tbody>
-     </table>
+    </table>
+
+
+
+    <script type='text/ng-template' id='title-form.html'>
+        <div class="modal-header">
+            <button type="button" class="close" ng-click='close()' aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Edit Title</h4>
+        </div>
+
+        <div class="modal-body">
+            <form class="form-horizontal col-sm-12" role="form" ng-submit='update()'>
+                <div class="form-group">
+                    <label  class="col-sm-12">Label</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" ng-model='title.label' required>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click='close()'>Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+
+    </script>
 
 </div>

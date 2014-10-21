@@ -86,6 +86,92 @@ function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams)
 	$scope.response = Leadsourcetypes.query();
 };
 
-function TitlestypeslistCtrl($scope, Titletypes, $window, $routeParams){
+
+/**
+ * Listing controller for customer titles
+ *
+ * @param {[type]} $scope       [description]
+ * @param {[type]} Titletypes   [description]
+ * @param {[type]} $window      [description]
+ * @param {[type]} $routeParams [description]
+ * @param {[type]} $modal       [description]
+ */
+function TitlestypeslistCtrl($scope, Titletypes, $window, $routeParams, $modal){
 	$scope.response = Titletypes.query();
+
+    /**
+     * Trigger function for editing title.
+     * Opens a modal.
+     *
+     * @param  {[type]} index [description]
+     *
+     * @return {[type]}       [description]
+     */
+    $scope.edit = function(index){
+        var modalInstance = $modal.open({
+            templateUrl: 'title-form.html',
+            controller: 'TitleModalCtrl',
+            size: 'md',
+            resolve: {
+                title: function() {
+                    return angular.copy($scope.response.items[index]);
+                }
+            }
+        });
+
+        modalInstance.result.then(function(title) {
+           $scope.response.items[index] = title;
+        }, function() {
+            // modal close - no action.
+        });
+
+
+
+    }
+
 };
+
+
+/**
+ * Modal controller which handles title edits.
+ *
+ * @param {[type]} $scope         [description]
+ * @param {[type]} $modalInstance [description]
+ * @param {[type]} title          [description]
+ * @param {[type]} Titletypes     [description]
+ */
+function TitleModalCtrl($scope, $modalInstance, title, Titletypes){
+    /**
+     * Passed selected title object
+     *
+     * @type {[type]}
+     */
+    $scope.title = title;
+
+
+    /**
+     * Update title
+     *
+     * @return {[type]} [description]
+     */
+    $scope.update = function(){
+        Titletypes.update($scope.title).$promise.
+            then(function(response){
+                $modalInstance.close($scope.title);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+
+    /**
+     * Closes the modal.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.close = function() {
+        $modalInstance.dismiss('cancel');
+    }
+
+}
