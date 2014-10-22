@@ -7,7 +7,7 @@
  * @param {[type]} $window      [description]
  * @param {[type]} $routeParams [description]
  */
-function ListingCtrl($scope, Customers, $window, $routeParams){
+function ListingCtrl($scope, Customers, $window, $routeParams, $location){
     /**
      * Max items per page.
      *
@@ -66,6 +66,19 @@ function ListingCtrl($scope, Customers, $window, $routeParams){
 
 
     /**
+     * trigger for customer view page
+     *
+     * @param  {[type]} index [description]
+     *
+     * @return {[type]}       [description]
+     */
+    $scope.view = function(index){
+        var customer = $scope.response.items[index];
+        $location.path('/customers/view/' + customer.id)
+    }
+
+
+    /**
      * Initialize current page. This will trigger the scope watch
      * and hence listing
      *
@@ -73,6 +86,50 @@ function ListingCtrl($scope, Customers, $window, $routeParams){
      */
     $scope.currentPage = 1;
 };
+
+
+
+/**
+ * Controller for customer details page
+ *
+ * @param {[type]} $scope       [description]
+ * @param {[type]} $routeParams [description]
+ */
+function CustomerViewCtrl($scope, $routeParams, Customers){
+    $scope.customer;
+    $scope.orders;
+    $scope.addresses;
+    $scope.securezones;
+
+
+    // customer details
+    Customers.get({id: $routeParams.id}).$promise
+        .then(function(response){
+            $scope.customer = response;
+        });
+
+
+    //orders
+    Customers.orders({id: $routeParams.id, skip:0, limit:200}).$promise
+        .then(function(response){
+            $scope.orders = response.items;
+        });
+
+
+    //addresses
+    Customers.addresses({id: $routeParams.id, skip:0, limit:200}).$promise
+        .then(function(response){
+            $scope.addresses = response.items;
+        });
+
+
+    //securezones
+    Customers.securezones({id: $routeParams.id, skip:0, limit:200}).$promise
+        .then(function(response){
+            $scope.securezones = response.items;
+        });
+
+}
 
 /**
  * Listing controller for customer types

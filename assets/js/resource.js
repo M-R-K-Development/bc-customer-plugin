@@ -7,7 +7,10 @@ app.factory('Customers', ['$resource', function($resource){
 		    'store':  {method:'POST'},
 		    'update': {method:'PUT'},
 		    'query':  {method:'GET'},
-		    'destroy': {method:'DELETE'}
+		    'destroy': {method:'DELETE'},
+		    'addresses':  {method:'GET', url:'/webresources/api/v3/sites/current/customers/:id/addresses'},
+		    'orders':  {method:'GET', url:'/webresources/api/v3/sites/current/customers/:id/orders'},
+		    'securezones':  {method:'GET', url:'/webresources/api/v3/sites/current/customers/:id/securezones'}
 		}
 	);
 }]);
