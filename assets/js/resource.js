@@ -8,6 +8,7 @@ app.factory('Customers', ['$resource', function($resource){
 		    'update': {method:'PUT'},
 		    'query':  {method:'GET'},
 		    'destroy': {method:'DELETE'},
+		    'contactdata': {method: 'GET'},
 		    'addresses':  {method:'GET', url:'/webresources/api/v3/sites/current/customers/:id/addresses'},
 		    'orders':  {method:'GET', url:'/webresources/api/v3/sites/current/customers/:id/orders'},
 		    'securezones':  {method:'GET', url:'/webresources/api/v3/sites/current/customers/:id/securezones'}
