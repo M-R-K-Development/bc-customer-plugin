@@ -85,7 +85,70 @@ function ListingCtrl($scope, Customers, $window, $routeParams){
  */
 function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $modal){
 	$scope.response =  Customertypes.query();
+	
+	$scope.edit = function(index){
+        var modalInstance = $modal.open({
+            templateUrl: 'customertype-form.html',
+            controller: 'CustomertypeModalCtrl',
+            size: 'md',
+            resolve: {
+               customertype: function() {
+                    return angular.copy($scope.response.items[index]);
+                }
+            }
+        });
+
+        modalInstance.result.then(function(customertype) {
+           $scope.response.items[index] = customertype;
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
 };
+
+/**
+ * Modal controller which handles Customer Type edits.
+ *
+ * @param {[type]} $scope          [description]
+ * @param {[type]} $modalInstance  [description]
+ * @param {[type]} customertype        [description]
+ * @param {[type]} Customertypes   [description]
+ */
+function CustomertypeModalCtrl($scope, $modalInstance, customertype, Customertypes){
+    /**
+     * Passed selected lead object
+     *
+     * @type {[type]}
+     */
+    $scope.customertype = customertype;
+
+    /**
+     * Update rating
+     *
+     * @return {[type]} [description]
+     */
+    $scope.update = function(){
+        Customertypes.update($scope.customertype).$promise.
+            then(function(response){
+                $modalInstance.close($scope.customertype);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+
+    /**
+     * Closes the modal.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.close = function() {
+        $modalInstance.dismiss('cancel');
+    }
+
+}
 
 /**
  * Listing controller for industry types
@@ -98,8 +161,70 @@ function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $mo
  */
 function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $modal){
 	$scope.response = Industrytypes.query();
+
+    $scope.edit = function(index){
+        var modalInstance = $modal.open({
+            templateUrl: 'industry-form.html',
+            controller: 'IndustryModalCtrl',
+            size: 'md',
+            resolve: {
+               industry: function() {
+                    return angular.copy($scope.response.items[index]);
+                }
+            }
+        });
+
+        modalInstance.result.then(function(industry) {
+           $scope.response.items[index] = industry;
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
 };
 
+/**
+ * Modal controller which handles Industry edits.
+ *
+ * @param {[type]} $scope          [description]
+ * @param {[type]} $modalInstance  [description]
+ * @param {[type]} industry        [description]
+ * @param {[type]} Industrytypes   [description]
+ */
+function IndustryModalCtrl($scope, $modalInstance, industry, Industrytypes){
+    /**
+     * Passed selected lead object
+     *
+     * @type {[type]}
+     */
+    $scope.industry = industry;
+
+    /**
+     * Update rating
+     *
+     * @return {[type]} [description]
+     */
+    $scope.update = function(){
+        Industrytypes.update($scope.industry).$promise.
+            then(function(response){
+                $modalInstance.close($scope.industry);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+
+    /**
+     * Closes the modal.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.close = function() {
+        $modalInstance.dismiss('cancel');
+    }
+
+}
 /**
  * Listing controller for leadsource types
  *
@@ -134,7 +259,7 @@ function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams,
 };
 
 /**
- * Modal controller which handles title edits.
+ * Modal controller which handles Lead Source edits.
  *
  * @param {[type]} $scope          [description]
  * @param {[type]} $modalInstance  [description]
