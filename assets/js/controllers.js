@@ -83,7 +83,7 @@ function ListingCtrl($scope, Customers, $window, $routeParams){
  * @param {[type]} $routeParams     [description]
  * @param {[type]} $modal           [description]
  */
-function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $modal){
+function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $modal, $window){
 	/**
      * Max items per page.
      *
@@ -177,6 +177,31 @@ function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $mo
         });
 
     }
+
+    /**
+     * Create modal.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.create = function(){
+        var modalInstance = $modal.open({
+            templateUrl: 'customertype-form.html',
+            controller: 'CustomertypeModalCtrl',
+            size: 'md',
+            resolve: {
+               customertype: function() {
+                    return {};
+                }
+            }
+        });
+
+        modalInstance.result.then(function(customertype) {
+            $window.location.reload();
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
 };
 
 /**
@@ -195,6 +220,22 @@ function CustomertypeModalCtrl($scope, $modalInstance, customertype, Customertyp
      */
     $scope.customertype = customertype;
 
+
+    /**
+     * Wrapper save function
+     *
+     * @return {[type]} [description]
+     */
+    $scope.save = function(){
+        if($scope.customertype.id){
+            $scope.update();
+        } else {
+            $scope.store();
+        }
+    }
+
+
+
     /**
      * Update Customer Type
      *
@@ -204,6 +245,21 @@ function CustomertypeModalCtrl($scope, $modalInstance, customertype, Customertyp
         Customertypes.update($scope.customertype).$promise.
             then(function(response){
                 $modalInstance.close($scope.customertype);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+    /**
+     * Create new customer type
+     *
+     * @return {[type]} [description]
+     */
+   $scope.store = function(){
+        Customertypes.store($scope.customertype).$promise.
+            then(function(response){
+                $modalInstance.close({});
             },
             function(errorResponse){
                 alert('Error updating label');
@@ -231,7 +287,7 @@ function CustomertypeModalCtrl($scope, $modalInstance, customertype, Customertyp
  * @param {[type]} $routeParams     [description]
  * @param {[type]} $modal           [description]
  */
-function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $modal){
+function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $modal, $window){
 	/**
      * Max items per page.
      *
@@ -296,7 +352,7 @@ function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $mo
      * @type {Number}
      */
     $scope.currentPage = 1;
-	
+
     /**
      * Trigger function for editing Industry.
      * Opens a modal.
@@ -304,7 +360,7 @@ function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $mo
      * @param  {[type]} index [description]
      *
      * @return {[type]}       [description]
-     */		
+     */
 
     $scope.edit = function(index){
         var modalInstance = $modal.open({
@@ -320,6 +376,32 @@ function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $mo
 
         modalInstance.result.then(function(industry) {
            $scope.response.items[index] = industry;
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
+
+
+    /**
+     * [create description]
+     *
+     * @return {[type]} [description]
+     */
+    $scope.create = function(){
+        var modalInstance = $modal.open({
+            templateUrl: 'industry-form.html',
+            controller: 'IndustryModalCtrl',
+            size: 'md',
+            resolve: {
+               industry: function() {
+                    return {};
+                }
+            }
+        });
+
+        modalInstance.result.then(function(industry) {
+            $window.location.reload();
         }, function() {
             // modal close - no action.
         });
@@ -343,13 +425,37 @@ function IndustryModalCtrl($scope, $modalInstance, industry, Industrytypes){
      */
     $scope.industry = industry;
 
+    $scope.save = function(){
+        if($scope.industry.id){
+            $scope.update();
+        } else {
+            $scope.store();
+        }
+    }
+
     /**
-     * Update rating
+     * Update industry type
      *
      * @return {[type]} [description]
      */
     $scope.update = function(){
         Industrytypes.update($scope.industry).$promise.
+            then(function(response){
+                $modalInstance.close($scope.industry);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+
+    /**
+     * Create new industry type
+     *
+     * @return {[type]} [description]
+     */
+    $scope.store = function(){
+        Industrytypes.store($scope.industry).$promise.
             then(function(response){
                 $modalInstance.close($scope.industry);
             },
@@ -378,7 +484,7 @@ function IndustryModalCtrl($scope, $modalInstance, industry, Industrytypes){
  * @param {[type]} $routeParams     [description]
  * @param {[type]} $modal           [description]
  */
-function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams, $modal){
+function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams, $modal, $window){
 	/**
      * Max items per page.
      *
@@ -443,7 +549,7 @@ function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams,
      * @type {Number}
      */
     $scope.currentPage = 1;
-	
+
     /**
      * Trigger function for editing Lead Source.
      * Opens a modal.
@@ -452,7 +558,6 @@ function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams,
      *
      * @return {[type]}       [description]
      */
-
     $scope.edit = function(index){
         var modalInstance = $modal.open({
             templateUrl: 'lead-form.html',
@@ -467,6 +572,32 @@ function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams,
 
         modalInstance.result.then(function(lead) {
            $scope.response.items[index] = lead;
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
+
+
+    /**
+     * Create lead sourec type
+     *
+     * @return {[type]} [description]
+     */
+    $scope.create = function(){
+        var modalInstance = $modal.open({
+            templateUrl: 'lead-form.html',
+            controller: 'LeadsourceModalCtrl',
+            size: 'md',
+            resolve: {
+               lead: function() {
+                    return {}
+                }
+            }
+        });
+
+        modalInstance.result.then(function(lead) {
+            $window.location.reload();
         }, function() {
             // modal close - no action.
         });
@@ -491,6 +622,15 @@ function LeadsourceModalCtrl($scope, $modalInstance, lead, Leadsourcetypes){
     $scope.lead = lead;
 
 
+    $scope.save = function(){
+        if($scope.lead.id){
+            $scope.update();
+        } else {
+            $scope.store();
+        }
+    }
+
+
     /**
      * Update leadsource
      *
@@ -500,6 +640,22 @@ function LeadsourceModalCtrl($scope, $modalInstance, lead, Leadsourcetypes){
         Leadsourcetypes.update($scope.lead).$promise.
             then(function(response){
                 $modalInstance.close($scope.lead);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+
+    /**
+     * Create lead source type.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.store = function(){
+        Leadsourcetypes.store($scope.lead).$promise.
+            then(function(response){
+                $modalInstance.close({});
             },
             function(errorResponse){
                 alert('Error updating label');
@@ -527,7 +683,7 @@ function LeadsourceModalCtrl($scope, $modalInstance, lead, Leadsourcetypes){
  * @param {[type]} $routeParams [description]
  * @param {[type]} $modal       [description]
  */
-function RatingtypeslistCtrl($scope, Ratingtypes, $window, $routeParams, $modal){
+function RatingtypeslistCtrl($scope, Ratingtypes, $window, $routeParams, $modal, $window){
 	/**
      * Max items per page.
      *
@@ -592,7 +748,7 @@ function RatingtypeslistCtrl($scope, Ratingtypes, $window, $routeParams, $modal)
      * @type {Number}
      */
     $scope.currentPage = 1;
-	
+
     /**
      * Trigger function for editing Rating.
      * Opens a modal.
@@ -600,7 +756,7 @@ function RatingtypeslistCtrl($scope, Ratingtypes, $window, $routeParams, $modal)
      * @param  {[type]} index [description]
      *
      * @return {[type]}       [description]
-     */	
+     */
 
     $scope.edit = function(index){
         var modalInstance = $modal.open({
@@ -616,6 +772,32 @@ function RatingtypeslistCtrl($scope, Ratingtypes, $window, $routeParams, $modal)
 
         modalInstance.result.then(function(rating) {
            $scope.response.items[index] = rating;
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
+
+
+    /**
+     * [create description]
+     *
+     * @return {[type]} [description]
+     */
+    $scope.create = function(){
+        var modalInstance = $modal.open({
+            templateUrl: 'rating-form.html',
+            controller: 'RatingModalCtrl',
+            size: 'md',
+            resolve: {
+                rating: function() {
+                    return {}
+                 }
+            }
+        });
+
+        modalInstance.result.then(function(rating) {
+            $window.location.reload();
         }, function() {
             // modal close - no action.
         });
@@ -640,6 +822,15 @@ function RatingModalCtrl($scope, $modalInstance, rating, Ratingtypes){
     $scope.rating = rating;
 
 
+    $scope.save = function(){
+        if($scope.rating.id){
+            $scope.update();
+        } else {
+            $scope.store();
+        }
+    }
+
+
     /**
      * Update rating
      *
@@ -649,6 +840,22 @@ function RatingModalCtrl($scope, $modalInstance, rating, Ratingtypes){
         Ratingtypes.update($scope.rating).$promise.
             then(function(response){
                 $modalInstance.close($scope.rating);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+
+    /**
+     * New rating type
+     *
+     * @return {[type]} [description]
+     */
+    $scope.store = function(){
+        Ratingtypes.store($scope.rating).$promise.
+            then(function(response){
+                $modalInstance.close({});
             },
             function(errorResponse){
                 alert('Error updating label');
@@ -676,7 +883,7 @@ function RatingModalCtrl($scope, $modalInstance, rating, Ratingtypes){
  * @param {[type]} $routeParams [description]
  * @param {[type]} $modal       [description]
  */
-function TitlestypeslistCtrl($scope, Titletypes, $window, $routeParams, $modal){
+function TitlestypeslistCtrl($scope, Titletypes, $window, $routeParams, $modal, $window){
 	/**
      * Max items per page.
      *
@@ -772,6 +979,32 @@ function TitlestypeslistCtrl($scope, Titletypes, $window, $routeParams, $modal){
 
     }
 
+
+        /**
+     * Create modal.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.create = function(){
+        var modalInstance = $modal.open({
+            templateUrl: 'title-form.html',
+            controller: 'TitleModalCtrl',
+            size: 'md',
+            resolve: {
+               title: function() {
+                    return {};
+                }
+            }
+        });
+
+        modalInstance.result.then(function(title) {
+            $window.location.reload();
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
+
 };
 
 
@@ -790,6 +1023,36 @@ function TitleModalCtrl($scope, $modalInstance, title, Titletypes){
      * @type {[type]}
      */
     $scope.title = title;
+
+    /**
+     * Wrapper save function
+     *
+     * @return {[type]} [description]
+     */
+    $scope.save = function(){
+        if($scope.title.id){
+            $scope.update();
+        } else {
+            $scope.store();
+        }
+    }
+
+
+    /**
+     * [store description]
+     *
+     * @return {[type]} [description]
+     */
+    $scope.store = function(){
+        Titletypes.store($scope.title).$promise.
+            then(function(response){
+                $modalInstance.close($scope.title);
+            },
+            function(errorResponse){
+                alert('Error creating label');
+            });
+
+    }
 
 
     /**

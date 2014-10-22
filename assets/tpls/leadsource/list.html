@@ -1,5 +1,12 @@
 <div class="panel panel-default">
-  <div class="panel-heading">Lead Source Types</div>
+    <div class="panel-heading" style='height:50px'>
+        <div class="pull-left">
+            Lead Source Types
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary" ng-click='create()'>New Lead Source Type</button>
+        </div>
+    </div>
 
     <table class="table table-condensed">
         <thead>
@@ -21,14 +28,14 @@
 </div>
 
     <script type='text/ng-template' id='lead-form.html'>
-        
+
         <div class="modal-header">
             <button type="button" class="close" ng-click='close()' aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Edit Rating</h4>
+            <h4 class="modal-title"><span ng-show='lead.id'>Edit</span><span ng-hide='lead.id'>New</span> Lead Source Type</h4>
         </div>
-        
+
         <div class="modal-body">
-                <form class="form-horizontal col-sm-12" role="form" ng-submit='update()'>
+                <form class="form-horizontal col-sm-12" role="form" ng-submit='save()'>
                 <div class="form-group">
                     <label  class="col-sm-12">Label</label>
                     <div class="col-sm-12">
@@ -38,15 +45,15 @@
                 <div class="form-group">
                     <div class="col-sm-12">
                         <button type="button" class="btn btn-default" ng-click='close()'>Close</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>
                 </form>
-            
+
         </div>
         <div class="modal-footer" style="clear:both;">
-            
+
         </div>
-        
+
 
     </script>
