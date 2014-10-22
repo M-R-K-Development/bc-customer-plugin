@@ -23,6 +23,10 @@ app.config(['$routeProvider',function($routeProvider) {
     templateUrl: 'assets/tpls/industry/list.html',
     controller: 'IndustrytypeslistCtrl'
    })
+   .when('/ratingtypeslist', {
+    templateUrl: 'assets/tpls/ratings/list.html',
+    controller: 'RatingtypeslistCtrl'
+   })
    .otherwise({
 		redirectTo: '/list'
 	});

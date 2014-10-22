@@ -74,18 +74,57 @@ function ListingCtrl($scope, Customers, $window, $routeParams){
     $scope.currentPage = 1;
 };
 
-function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams){
+/**
+ * Listing controller for customer types
+ *
+ * @param {[type]} $scope       [description]
+ * @param {[type]} Customertypes   [description]
+ * @param {[type]} $window      [description]
+ * @param {[type]} $routeParams [description]
+ * @param {[type]} $modal       [description]
+ */
+function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $modal){
 	$scope.response =  Customertypes.query();
 };
 
-function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams){
+/**
+ * Listing controller for industry types
+ *
+ * @param {[type]} $scope       [description]
+ * @param {[type]} Industrytypes   [description]
+ * @param {[type]} $window      [description]
+ * @param {[type]} $routeParams [description]
+ * @param {[type]} $modal       [description]
+ */
+function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $modal){
 	$scope.response = Industrytypes.query();
 };
 
-function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams){
+/**
+ * Listing controller for leadsource types
+ *
+ * @param {[type]} $scope       [description]
+ * @param {[type]} Leadsourcetype   [description]
+ * @param {[type]} $window      [description]
+ * @param {[type]} $routeParams [description]
+ * @param {[type]} $modal       [description]
+ */
+function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams, $modal){
 	$scope.response = Leadsourcetypes.query();
 };
 
+/**
+ * Listing controller for rating types
+ *
+ * @param {[type]} $scope       [description]
+ * @param {[type]} Ratingtype   [description]
+ * @param {[type]} $window      [description]
+ * @param {[type]} $routeParams [description]
+ * @param {[type]} $modal       [description]
+ */
+function RatingtypeslistCtrl($scope, Ratingtypes, $window, $routeParams, $modal){
+	$scope.response = Ratingtypes.query();
+};
 
 /**
  * Listing controller for customer titles
