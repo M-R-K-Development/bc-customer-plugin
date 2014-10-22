@@ -84,8 +84,80 @@ function ListingCtrl($scope, Customers, $window, $routeParams){
  * @param {[type]} $modal           [description]
  */
 function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $modal){
-	$scope.response =  Customertypes.query();
-	
+	/**
+     * Max items per page.
+     *
+     * @type {Number}
+     */
+    $scope.itemsPerPage = 10;
+
+    /**
+     * Current page number
+     */
+    $scope.currentPage;
+
+    /**
+     * Total count of customer types
+     */
+    $scope.totalItems;
+
+    /**
+     * response object for the current page number
+     */
+    $scope.response;
+
+    /**
+     * Watching currentPage number which triggers
+     * listing call in return.
+     *
+     * @param  {[type]} newValue [description]
+     * @param  {[type]} oldValue [description]
+     *
+     * @return {[type]}          [description]
+     */
+    $scope.$watch('currentPage',function(newValue, oldValue){
+        if(!newValue){
+            return;
+        }
+
+        var skip = (newValue - 1) * $scope.itemsPerPage;
+        $scope.list(skip, $scope.itemsPerPage);
+    });
+
+    /**
+     * Get Customer Type Listing
+     *
+     * @param  {[type]} skip   [description]
+     * @param  {[type]} limit  [description]
+     *
+     * @return {[type]}        [description]
+     */
+    $scope.list = function(skip, limit){
+        Customertypes.query({skip: skip, limit: limit}).$promise.
+            then(function(response){
+                $scope.response = response;
+                $scope.totalItems = response.totalItemsCount;
+            });
+    }
+
+
+    /**
+     * Initialize current page. This will trigger the scope watch
+     * and hence listing
+     *
+     * @type {Number}
+     */
+    $scope.currentPage = 1;
+
+
+    /**
+     * Trigger function for editing Customer Type.
+     * Opens a modal.
+     *
+     * @param  {[type]} index [description]
+     *
+     * @return {[type]}       [description]
+     */
 	$scope.edit = function(index){
         var modalInstance = $modal.open({
             templateUrl: 'customertype-form.html',
@@ -112,19 +184,19 @@ function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $mo
  *
  * @param {[type]} $scope          [description]
  * @param {[type]} $modalInstance  [description]
- * @param {[type]} customertype        [description]
+ * @param {[type]} customertype    [description]
  * @param {[type]} Customertypes   [description]
  */
 function CustomertypeModalCtrl($scope, $modalInstance, customertype, Customertypes){
     /**
-     * Passed selected lead object
+     * Passed selected Customer Type object
      *
      * @type {[type]}
      */
     $scope.customertype = customertype;
 
     /**
-     * Update rating
+     * Update Customer Type
      *
      * @return {[type]} [description]
      */
@@ -160,7 +232,79 @@ function CustomertypeModalCtrl($scope, $modalInstance, customertype, Customertyp
  * @param {[type]} $modal           [description]
  */
 function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $modal){
-	$scope.response = Industrytypes.query();
+	/**
+     * Max items per page.
+     *
+     * @type {Number}
+     */
+    $scope.itemsPerPage = 10;
+
+    /**
+     * Current page number
+     */
+    $scope.currentPage;
+
+    /**
+     * Total count of response
+     */
+    $scope.totalItems;
+
+    /**
+     * response object for the current page number
+     */
+    $scope.response;
+
+    /**
+     * Watching currentPage number which triggers
+     * listing call in return.
+     *
+     * @param  {[type]} newValue [description]
+     * @param  {[type]} oldValue [description]
+     *
+     * @return {[type]}          [description]
+     */
+    $scope.$watch('currentPage',function(newValue, oldValue){
+        if(!newValue){
+            return;
+        }
+
+        var skip = (newValue - 1) * $scope.itemsPerPage;
+        $scope.list(skip, $scope.itemsPerPage);
+    });
+
+    /**
+     * Get Industry Listing
+     *
+     * @param  {[type]} skip   [description]
+     * @param  {[type]} limit  [description]
+     *
+     * @return {[type]}        [description]
+     */
+    $scope.list = function(skip, limit){
+        Industrytypes.query({skip: skip, limit: limit}).$promise.
+            then(function(response){
+                $scope.response = response;
+                $scope.totalItems = response.totalItemsCount;
+            });
+    }
+
+
+    /**
+     * Initialize current page. This will trigger the scope watch
+     * and hence listing
+     *
+     * @type {Number}
+     */
+    $scope.currentPage = 1;
+	
+    /**
+     * Trigger function for editing Industry.
+     * Opens a modal.
+     *
+     * @param  {[type]} index [description]
+     *
+     * @return {[type]}       [description]
+     */		
 
     $scope.edit = function(index){
         var modalInstance = $modal.open({
@@ -193,7 +337,7 @@ function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $mo
  */
 function IndustryModalCtrl($scope, $modalInstance, industry, Industrytypes){
     /**
-     * Passed selected lead object
+     * Passed selected industry object
      *
      * @type {[type]}
      */
@@ -235,7 +379,79 @@ function IndustryModalCtrl($scope, $modalInstance, industry, Industrytypes){
  * @param {[type]} $modal           [description]
  */
 function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams, $modal){
-	$scope.response = Leadsourcetypes.query();
+	/**
+     * Max items per page.
+     *
+     * @type {Number}
+     */
+    $scope.itemsPerPage = 10;
+
+    /**
+     * Current page number
+     */
+    $scope.currentPage;
+
+    /**
+     * Total count of customer
+     */
+    $scope.totalItems;
+
+    /**
+     * response object for the current page number
+     */
+    $scope.response;
+
+    /**
+     * Watching currentPage number which triggers
+     * listing call in return.
+     *
+     * @param  {[type]} newValue [description]
+     * @param  {[type]} oldValue [description]
+     *
+     * @return {[type]}          [description]
+     */
+    $scope.$watch('currentPage',function(newValue, oldValue){
+        if(!newValue){
+            return;
+        }
+
+        var skip = (newValue - 1) * $scope.itemsPerPage;
+        $scope.list(skip, $scope.itemsPerPage);
+    });
+
+    /**
+     * Get Leadsource Listing
+     *
+     * @param  {[type]} skip   [description]
+     * @param  {[type]} limit  [description]
+     *
+     * @return {[type]}        [description]
+     */
+    $scope.list = function(skip, limit){
+        Leadsourcetypes.query({skip: skip, limit: limit}).$promise.
+            then(function(response){
+                $scope.response = response;
+                $scope.totalItems = response.totalItemsCount;
+            });
+    }
+
+
+    /**
+     * Initialize current page. This will trigger the scope watch
+     * and hence listing
+     *
+     * @type {Number}
+     */
+    $scope.currentPage = 1;
+	
+    /**
+     * Trigger function for editing Lead Source.
+     * Opens a modal.
+     *
+     * @param  {[type]} index [description]
+     *
+     * @return {[type]}       [description]
+     */
 
     $scope.edit = function(index){
         var modalInstance = $modal.open({
@@ -276,7 +492,7 @@ function LeadsourceModalCtrl($scope, $modalInstance, lead, Leadsourcetypes){
 
 
     /**
-     * Update rating
+     * Update leadsource
      *
      * @return {[type]} [description]
      */
@@ -312,7 +528,79 @@ function LeadsourceModalCtrl($scope, $modalInstance, lead, Leadsourcetypes){
  * @param {[type]} $modal       [description]
  */
 function RatingtypeslistCtrl($scope, Ratingtypes, $window, $routeParams, $modal){
-	$scope.response = Ratingtypes.query();
+	/**
+     * Max items per page.
+     *
+     * @type {Number}
+     */
+    $scope.itemsPerPage = 10;
+
+    /**
+     * Current page number
+     */
+    $scope.currentPage;
+
+    /**
+     * Total count of customer
+     */
+    $scope.totalItems;
+
+    /**
+     * response object for the current page number
+     */
+    $scope.response;
+
+    /**
+     * Watching currentPage number which triggers
+     * listing call in return.
+     *
+     * @param  {[type]} newValue [description]
+     * @param  {[type]} oldValue [description]
+     *
+     * @return {[type]}          [description]
+     */
+    $scope.$watch('currentPage',function(newValue, oldValue){
+        if(!newValue){
+            return;
+        }
+
+        var skip = (newValue - 1) * $scope.itemsPerPage;
+        $scope.list(skip, $scope.itemsPerPage);
+    });
+
+    /**
+     * Get Customer Listing
+     *
+     * @param  {[type]} skip   [description]
+     * @param  {[type]} limit  [description]
+     *
+     * @return {[type]}        [description]
+     */
+    $scope.list = function(skip, limit){
+        Ratingtypes.query({skip: skip, limit: limit}).$promise.
+            then(function(response){
+                $scope.response = response;
+                $scope.totalItems = response.totalItemsCount;
+            });
+    }
+
+
+    /**
+     * Initialize current page. This will trigger the scope watch
+     * and hence listing
+     *
+     * @type {Number}
+     */
+    $scope.currentPage = 1;
+	
+    /**
+     * Trigger function for editing Rating.
+     * Opens a modal.
+     *
+     * @param  {[type]} index [description]
+     *
+     * @return {[type]}       [description]
+     */	
 
     $scope.edit = function(index){
         var modalInstance = $modal.open({
@@ -389,7 +677,70 @@ function RatingModalCtrl($scope, $modalInstance, rating, Ratingtypes){
  * @param {[type]} $modal       [description]
  */
 function TitlestypeslistCtrl($scope, Titletypes, $window, $routeParams, $modal){
-	$scope.response = Titletypes.query();
+	/**
+     * Max items per page.
+     *
+     * @type {Number}
+     */
+    $scope.itemsPerPage = 10;
+
+    /**
+     * Current page number
+     */
+    $scope.currentPage;
+
+    /**
+     * Total count of customer
+     */
+    $scope.totalItems;
+
+    /**
+     * response object for the current page number
+     */
+    $scope.response;
+
+    /**
+     * Watching currentPage number which triggers
+     * listing call in return.
+     *
+     * @param  {[type]} newValue [description]
+     * @param  {[type]} oldValue [description]
+     *
+     * @return {[type]}          [description]
+     */
+    $scope.$watch('currentPage',function(newValue, oldValue){
+        if(!newValue){
+            return;
+        }
+
+        var skip = (newValue - 1) * $scope.itemsPerPage;
+        $scope.list(skip, $scope.itemsPerPage);
+    });
+
+    /**
+     * Get Customer Listing
+     *
+     * @param  {[type]} skip   [description]
+     * @param  {[type]} limit  [description]
+     *
+     * @return {[type]}        [description]
+     */
+    $scope.list = function(skip, limit){
+        Titletypes.query({skip: skip, limit: limit}).$promise.
+            then(function(response){
+                $scope.response = response;
+                $scope.totalItems = response.totalItemsCount;
+            });
+    }
+
+
+    /**
+     * Initialize current page. This will trigger the scope watch
+     * and hence listing
+     *
+     * @type {Number}
+     */
+    $scope.currentPage = 1;
 
     /**
      * Trigger function for editing title.
