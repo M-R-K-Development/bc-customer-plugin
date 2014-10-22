@@ -51,7 +51,7 @@ function ListingCtrl($scope, Customers, $window, $routeParams){
     /**
      * Get Customer Listing
      *
-     * @param  {[type]} skip [description]
+     * @param  {[type]} skip   [description]
      * @param  {[type]} limit  [description]
      *
      * @return {[type]}        [description]
@@ -77,11 +77,11 @@ function ListingCtrl($scope, Customers, $window, $routeParams){
 /**
  * Listing controller for customer types
  *
- * @param {[type]} $scope       [description]
- * @param {[type]} Customertypes   [description]
- * @param {[type]} $window      [description]
- * @param {[type]} $routeParams [description]
- * @param {[type]} $modal       [description]
+ * @param {[type]} $scope           [description]
+ * @param {[type]} Customertypes    [description]
+ * @param {[type]} $window          [description]
+ * @param {[type]} $routeParams     [description]
+ * @param {[type]} $modal           [description]
  */
 function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $modal){
 	$scope.response =  Customertypes.query();
@@ -90,11 +90,11 @@ function CustomertypeslistCtrl($scope, Customertypes, $window, $routeParams, $mo
 /**
  * Listing controller for industry types
  *
- * @param {[type]} $scope       [description]
- * @param {[type]} Industrytypes   [description]
- * @param {[type]} $window      [description]
- * @param {[type]} $routeParams [description]
- * @param {[type]} $modal       [description]
+ * @param {[type]} $scope           [description]
+ * @param {[type]} Industrytypes    [description]
+ * @param {[type]} $window          [description]
+ * @param {[type]} $routeParams     [description]
+ * @param {[type]} $modal           [description]
  */
 function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $modal){
 	$scope.response = Industrytypes.query();
@@ -103,15 +103,79 @@ function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $mo
 /**
  * Listing controller for leadsource types
  *
- * @param {[type]} $scope       [description]
+ * @param {[type]} $scope           [description]
  * @param {[type]} Leadsourcetype   [description]
- * @param {[type]} $window      [description]
- * @param {[type]} $routeParams [description]
- * @param {[type]} $modal       [description]
+ * @param {[type]} $window          [description]
+ * @param {[type]} $routeParams     [description]
+ * @param {[type]} $modal           [description]
  */
 function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams, $modal){
 	$scope.response = Leadsourcetypes.query();
+
+    $scope.edit = function(index){
+        var modalInstance = $modal.open({
+            templateUrl: 'lead-form.html',
+            controller: 'LeadsourceModalCtrl',
+            size: 'md',
+            resolve: {
+               lead: function() {
+                    return angular.copy($scope.response.items[index]);
+                }
+            }
+        });
+
+        modalInstance.result.then(function(lead) {
+           $scope.response.items[index] = lead;
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
 };
+
+/**
+ * Modal controller which handles title edits.
+ *
+ * @param {[type]} $scope          [description]
+ * @param {[type]} $modalInstance  [description]
+ * @param {[type]} lead            [description]
+ * @param {[type]} Leadsourcetypes [description]
+ */
+function LeadsourceModalCtrl($scope, $modalInstance, lead, Leadsourcetypes){
+    /**
+     * Passed selected lead object
+     *
+     * @type {[type]}
+     */
+    $scope.lead = lead;
+
+
+    /**
+     * Update rating
+     *
+     * @return {[type]} [description]
+     */
+    $scope.update = function(){
+        Leadsourcetypes.update($scope.lead).$promise.
+            then(function(response){
+                $modalInstance.close($scope.lead);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+
+    /**
+     * Closes the modal.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.close = function() {
+        $modalInstance.dismiss('cancel');
+    }
+
+}
 
 /**
  * Listing controller for rating types
@@ -124,7 +188,71 @@ function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams,
  */
 function RatingtypeslistCtrl($scope, Ratingtypes, $window, $routeParams, $modal){
 	$scope.response = Ratingtypes.query();
+
+    $scope.edit = function(index){
+        var modalInstance = $modal.open({
+            templateUrl: 'rating-form.html',
+            controller: 'RatingModalCtrl',
+            size: 'md',
+            resolve: {
+                rating: function() {
+                    return angular.copy($scope.response.items[index]);
+                }
+            }
+        });
+
+        modalInstance.result.then(function(rating) {
+           $scope.response.items[index] = rating;
+        }, function() {
+            // modal close - no action.
+        });
+
+    }
 };
+
+/**
+ * Modal controller which handles title edits.
+ *
+ * @param {[type]} $scope          [description]
+ * @param {[type]} $modalInstance  [description]
+ * @param {[type]} rating          [description]
+ * @param {[type]} Ratingtypes     [description]
+ */
+function RatingModalCtrl($scope, $modalInstance, rating, Ratingtypes){
+    /**
+     * Passed selected rating object
+     *
+     * @type {[type]}
+     */
+    $scope.rating = rating;
+
+
+    /**
+     * Update rating
+     *
+     * @return {[type]} [description]
+     */
+    $scope.update = function(){
+        Ratingtypes.update($scope.rating).$promise.
+            then(function(response){
+                $modalInstance.close($scope.rating);
+            },
+            function(errorResponse){
+                alert('Error updating label');
+            });
+    }
+
+
+    /**
+     * Closes the modal.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.close = function() {
+        $modalInstance.dismiss('cancel');
+    }
+
+}
 
 /**
  * Listing controller for customer titles
