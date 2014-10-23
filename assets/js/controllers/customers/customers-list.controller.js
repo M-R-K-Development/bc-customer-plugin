@@ -127,15 +127,24 @@ function ListingCtrl($scope, Customers, $window, $routeParams, $location){
 
     $scope.filter = function(){
         $scope.filteractive = true;
-        $scope.currentPage = 1;
-        $scope.list($scope.currentPage, $scope.itemsPerPage);
+
+        if($scope.currentPage != 1) {
+            $scope.currentPage = 1;
+        } else {
+            $scope.list(0, $scope.itemsPerPage);
+        }
 
     }
 
     $scope.clearfilter = function(){
         $scope.filteractive = false;
-        $scope.currentPage = 1;
-        $scope.list($scope.currentPage, $scope.itemsPerPage);
+        $scope.filterlabel = "";
+        $scope.filtervalue = "";
+        if($scope.currentPage != 1) {
+            $scope.currentPage = 1;
+        } else {
+            $scope.list(0, $scope.itemsPerPage);
+        }
     }
     /**
      * Initialize current page. This will trigger the scope watch
