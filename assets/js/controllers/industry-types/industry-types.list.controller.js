@@ -127,4 +127,27 @@ function IndustrytypeslistCtrl($scope, Industrytypes, $window, $routeParams, $mo
         });
 
     }
+
+
+    /**
+     * [destroy description]
+     *
+     * @param  {[type]} $index [description]
+     *
+     * @return {[type]}        [description]
+     */
+    $scope.destroy = function(index){
+        if($window.confirm('Are you sure?')){
+            Industrytypes.destroy(
+                   $scope.response.items[index],
+                   function(response){
+                        $window.location.reload();
+                   },
+                   function(errorResponse){
+                        alert('Error deleting item')
+                   }
+           );
+        }
+    }
+
 };

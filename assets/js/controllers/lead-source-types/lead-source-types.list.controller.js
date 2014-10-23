@@ -126,4 +126,27 @@ function LeadsourcetypeslistCtrl($scope, Leadsourcetypes, $window, $routeParams,
         });
 
     }
+
+
+    /**
+     * [destroy description]
+     *
+     * @param  {[type]} $index [description]
+     *
+     * @return {[type]}        [description]
+     */
+    $scope.destroy = function(index){
+        if($window.confirm('Are you sure?')){
+            Leadsourcetypes.destroy(
+                   $scope.response.items[index],
+                   function(response){
+                        $window.location.reload();
+                   },
+                   function(errorResponse){
+                        alert('Error deleting item')
+                   }
+           );
+        }
+    }
+
 };

@@ -18,7 +18,7 @@
         	<tr ng-repeat="item in response.items">
             	<td>{{item.id}}</td>
                 <td>{{item.label}}</td>
-                <td><a href="javascript:void(0)" class="btn btn-default" ng-click='edit($index)'>Edit</a><a href="javascript:void(0)" class="btn btn-default" ng-click='edit($index)'>Delete</a></td>
+                <td><a href="javascript:void(0)" class="btn btn-default" ng-click='edit($index)'>Edit</a><a href="javascript:void(0)" class="btn btn-danger" ng-click='destroy($index)'>Delete</a></td>
             </tr>
         </tbody>
      </table>
