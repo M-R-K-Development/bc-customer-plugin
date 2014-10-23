@@ -8,7 +8,7 @@ app.config(['$routeProvider',function($routeProvider) {
     controller: 'ListingCtrl'
    })
    .when('/customers/view/:id', {
-    templateUrl: 'assets/tpls/customer/view.html',
+    templateUrl: 'assets/tpls/customer/view.tpl',
     controller: 'CustomerViewCtrl'
    })
    .when('/leadsourcelist', {
