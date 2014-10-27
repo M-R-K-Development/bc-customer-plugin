@@ -39,6 +39,12 @@ function ListingCtrl($scope, Customers, $window, $routeParams, $location){
      */
     $scope.response;
 
+
+    /**
+     * Currently selected index.
+     */
+    $scope.selectedIndex;
+
     /**
     * Filter enabled
     */
@@ -97,6 +103,7 @@ function ListingCtrl($scope, Customers, $window, $routeParams, $location){
 
             Customers.query({skip: skip, limit: limit, where: $scope.filterterms}).$promise.
                 then(function(response){
+                    $scope.selectedIndex = null;
                     $scope.response = response;
                     $scope.totalItems = response.totalItemsCount;
                 });
@@ -105,6 +112,7 @@ function ListingCtrl($scope, Customers, $window, $routeParams, $location){
         }else{
             Customers.query({skip: skip, limit: limit}).$promise.
                 then(function(response){
+                    $scope.selectedIndex = null;
                     $scope.response = response;
                     $scope.totalItems = response.totalItemsCount;
                 });
@@ -156,10 +164,9 @@ function ListingCtrl($scope, Customers, $window, $routeParams, $location){
      * @return {[type]}          [description]
      */
     $scope.findDuplicates = function(index){
+        $scope.selectedIndex = index;
         var customer = $scope.response.items[index];
         var duplicates = [];
-
-        console.log(customer);
 
         var where = '{' +
                 '"firstName" : {"$contains" : "' + customer.firstName + '"},' +
@@ -170,7 +177,18 @@ function ListingCtrl($scope, Customers, $window, $routeParams, $location){
 
         Customers.query({skip: 0, limit: 100, where: where}).$promise.
             then(function(response){
+                if(response.items.length){
+                    var ids = [];
+                    angular.forEach(response.items, function(customer){
+                        ids.push(customer.id);
+                    });
 
+                    alert('Duplicates found with customer ID - ' + ids.join(', ') );
+
+
+                } else {
+                    alert('No duplicates found');
+                }
             });
     }
 
