@@ -146,6 +146,47 @@ function ListingCtrl($scope, Customers, $window, $routeParams, $location){
             $scope.list(0, $scope.itemsPerPage);
         }
     }
+
+
+    /**
+     * Finds duplicates for a given customer
+     *
+     * @param  {[type]} customer [description]
+     *
+     * @return {[type]}          [description]
+     */
+    $scope.findDuplicates = function(index){
+        var customer = $scope.response.items[index];
+        var duplicates = [];
+
+        console.log(customer);
+
+        var where = '{' +
+                '"firstName" : {"$contains" : "' + customer.firstName + '"},' +
+                '"lastName" : {"$contains" : "' + customer.lastName + '"},' +
+                '"id" : {"$ne" : ' + customer.id+ '}' +
+                '}';
+
+
+        Customers.query({skip: 0, limit: 100, where: where}).$promise.
+            then(function(response){
+
+            });
+    }
+
+
+    /**
+     * [mergeContact description]
+     *
+     * @param  {[type]} from [description]
+     * @param  {[type]} to   [description]
+     *
+     * @return {[type]}      [description]
+     */
+    $scope.mergeContact = function(from, to){
+
+    }
+
     /**
      * Initialize current page. This will trigger the scope watch
      * and hence listing

@@ -29,7 +29,10 @@
                 <td>{{item.firstName}}</td>
                 <td>{{item.lastName}}</td>
                 <td>{{item.username}}</td>
-                <td><a href="javascript:void(0)" class="btn btn-default" ng-click='view($index)'>View</a></td>
+                <td>
+                  <a href="javascript:void(0)" class="btn btn-default" ng-click='view($index)'>View</a>&nbsp;
+                  <a href="javascript:void(0)" class="btn btn-default" ng-click='findDuplicates($index)'>Find Duplicate</a>
+                </td>
             </tr>
         </tbody>
     </table>
